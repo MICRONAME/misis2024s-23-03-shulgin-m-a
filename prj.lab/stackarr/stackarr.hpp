@@ -15,7 +15,7 @@ class Stackarr {
   ///COPY CONSTRUCTOR
   Stackarr(const Stackarr &rhs);
   ///CONSTRUCTOR BY SIZE
-  explicit Stackarr(std::ptrdiff_t size);
+  //explicit Stackarr(std::ptrdiff_t size);
   ///DESTRUCTOR
   ~Stackarr();
   ///OVERLOADING OPERATOR =
@@ -26,13 +26,16 @@ class Stackarr {
   ///DELETING ELEMENT FROM THE TOP
   void pop();
   ///CHECKING EMPTITY
-  [[nodiscard]] bool empty() const;
+  [[nodiscard]] bool empty() const noexcept;
   ///GETS TOP VALUE
-  [[nodiscard]] Complex top() const;
+  [[nodiscard]] const Complex top() const;
 
   ///GETS PRIVATE SIZE VALUE
   [[nodiscard]] std::ptrdiff_t size() const { return size_; }
+
   [[nodiscard]] std::ptrdiff_t capacity() const { return capacity_; }
+
+  void clear() noexcept;
 
  private:
   std::ptrdiff_t size_ = 0;
