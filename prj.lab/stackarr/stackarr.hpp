@@ -24,7 +24,7 @@ class Stackarr {
   ///PUSHES NEW ELEMENT TO THE TOP
   void push(const Complex &rhs);
   ///DELETING ELEMENT FROM THE TOP
-  void pop();
+  void pop() noexcept;
   ///CHECKING EMPTITY
   [[nodiscard]] bool empty() const noexcept;
   ///GETS TOP VALUE

@@ -38,15 +38,18 @@ Stackarr &Stackarr::operator=(const Stackarr &rhs) {
 
 void Stackarr::push(const Complex &rhs) {
   size_++;
-  if (capacity_ == size_){
-    data_ = new Complex [capacity_];
+  if (capacity_ == size_ + 1){
     capacity_ = 2 * size_;
+    auto* d = new Complex[capacity_ * 2];
+    std::copy(data_, data_ + size_, d);
+    std::swap(data_, d);
+    delete[] d;
   }
   data_[size_ - 1] = rhs;
 }
 
-void Stackarr::pop() {
-  if (size_ == 0) throw std::runtime_error("cannot pop value: stack is empty");
+void Stackarr::pop() noexcept{
+  //if (size_ == 0) throw std::runtime_error("cannot pop value: stack is empty");
   size_--;
 }
 
@@ -62,14 +65,3 @@ const Complex Stackarr::top() const {
 void Stackarr::clear() noexcept {
   size_ = 0;
 }
-
-/*
-Stackarr::Stackarr(const std::ptrdiff_t size) {
-  if (size <= 0) throw std::runtime_error("size <= 0");
-  else {
-    if (2 * size > capacity_) capacity_ = 2 * size;
-    size_ = size;
-    data_ = new Complex[capacity_];
-    for (std::ptrdiff_t i = 0; i < size_; ++i) data_[i] = 0;
-  }
-}*/
