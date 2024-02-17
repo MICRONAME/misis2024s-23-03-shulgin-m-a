@@ -16,9 +16,6 @@ class Stacklst{
   ///COPY CONSTRUCTOR
   Stacklst(const Stacklst &rhs);
 
-  ///CONSTRUCTOR BY SIZE
-  explicit Stacklst(std::ptrdiff_t size);
-
   ///DESTRUCTOR
   ~Stacklst();
 
@@ -32,7 +29,7 @@ class Stacklst{
   void pop();
 
   ///CHECKING EMPTITY
-  [[nodiscard]] bool empty() const;
+  [[nodiscard]] bool empty() const noexcept;
 
   ///GETS TOP VALUE
   [[nodiscard]] Complex top() const;
@@ -45,7 +42,7 @@ class Stacklst{
  private:
   struct Node{
     Complex el;
-    Node* next = nullptr;
+    Node* prev = nullptr;
   };
   Node* head = nullptr;
 };

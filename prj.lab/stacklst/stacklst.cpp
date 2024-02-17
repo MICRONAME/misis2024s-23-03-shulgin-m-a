@@ -17,22 +17,23 @@ Stacklst &Stacklst::operator=(const Stacklst &rhs) {
 }
 
 void Stacklst::push(const Complex &rhs) {
-  struct Node *n;
-  n = new Node;
-  n->el = rhs;
-  if (empty()){
-    head = n->next;
-  }
-  else {
-
-  }
+  auto *temp = new Node;
+  temp->el = rhs;
+  temp->prev = head;
+  head = temp;
 }
 
 void Stacklst::pop() {
-
+  if (empty()){
+    throw std::runtime_error("cannot pop value: stack is empty");
+  }
+  Node* temp;
+  temp = head;
+  head = head->prev;
+  delete temp;
 }
 
-bool Stacklst::empty() const {
+bool Stacklst::empty() const noexcept{
   if (head == nullptr) return true;
   return false;
 }
@@ -40,10 +41,6 @@ bool Stacklst::empty() const {
 Complex Stacklst::top() const {
   if (empty()) throw std::runtime_error("cannot get the top value: stack is empty");
   else{
-    return
+    return head->el;
   }
-}
-
-Stacklst::Stacklst(const std::ptrdiff_t size) {
-
 }

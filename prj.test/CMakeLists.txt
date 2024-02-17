@@ -10,3 +10,7 @@ target_link_libraries(dynarr_test dynarr)
 add_executable(stackarr_test stackarr_test.cpp)
 target_link_libraries(stackarr_test stackarr)
 target_link_libraries(stackarr_test complex)
+
+add_executable(stacklst_test stacklst_test.cpp)
+target_link_libraries(stacklst_test stacklst)
+target_link_libraries(stacklst_test complex)
