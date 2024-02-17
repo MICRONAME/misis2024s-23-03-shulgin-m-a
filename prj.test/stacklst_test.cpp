@@ -8,7 +8,9 @@ int main(){
   Stacklst a;
   a.push(Complex(5));
   a.push(Complex(6));
-  a.pop();
-  //a.pop();
-  std::cout << a.top();
+  std::cout << a.top() << "\n";
+  Stacklst b(a);
+  std::cout << b.top() << ' ' << a.top() << "\n";
+  b.pop();
+  std::cout << b.top() << ' ' << a.top();
 }
