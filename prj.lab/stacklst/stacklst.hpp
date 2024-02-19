@@ -2,39 +2,39 @@
 // Created by user on 12.02.2024.
 //
 
-#ifndef MISIS2023F_23_03_SHULGIN_M_A_PRJ_LAB_STACKLST_STACKLST_HPP_
-#define MISIS2023F_23_03_SHULGIN_M_A_PRJ_LAB_STACKLST_STACKLST_HPP_
+#ifndef MISIS2023F_23_03_SHULGIN_M_A_PRJ_LAB_StackLst_StackLst_HPP_
+#define MISIS2023F_23_03_SHULGIN_M_A_PRJ_LAB_StackLst_StackLst_HPP_
 
 #include <complex/complex.hpp>
 #include <cstddef>
 
-class Stacklst{
+class StackLst{
  public:
   ///DEFAULT CONSTRUCTOR
-  Stacklst() = default;
+  StackLst() = default;
 
   ///COPY CONSTRUCTOR
-  Stacklst(const Stacklst &rhs);
+  StackLst(const StackLst &rhs);
 
   ///DESTRUCTOR
-  ~Stacklst();
+  ~StackLst();
 
   ///OVERLOADING OPERATOR =
-  Stacklst &operator=(const Stacklst &rhs);
+  StackLst &operator=(const StackLst &rhs);
 
-  ///PUSHES NEW ELEMENT TO THE TOP
-  void push(const Complex &rhs);
+  ///PushES NEW ELEMENT TO THE Top
+  void Push(const Complex &rhs);
 
-  ///DELETING ELEMENT FROM THE TOP
-  void pop();
+  ///DELETING ELEMENT FROM THE Top
+  void Pop();
 
-  void clear() noexcept;
+  void Clear() noexcept;
 
   ///CHECKING EMPTITY
-  [[nodiscard]] bool empty() const noexcept;
+  [[nodiscard]] bool IsEmpty() const noexcept;
 
-  ///GETS TOP VALUE
-  [[nodiscard]] Complex top() const;
+  ///GETS Top VALUE
+  [[nodiscard]] Complex Top() const;
 
 /*
   ///GETS PRIVATE SIZE VALUE
@@ -50,4 +50,4 @@ class Stacklst{
 };
 
 
-#endif //MISIS2023F_23_03_SHULGIN_M_A_PRJ_LAB_STACKLST_STACKLST_HPP_
+#endif //MISIS2023F_23_03_SHULGIN_M_A_PRJ_LAB_StackLst_StackLst_HPP_

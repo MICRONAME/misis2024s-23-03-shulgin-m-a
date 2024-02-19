@@ -4,7 +4,7 @@
 #include <Stacklst/Stacklst.hpp>
 #include <stdexcept>
 
-Stacklst::Stacklst(const Stacklst &rhs) {
+StackLst::StackLst(const StackLst &rhs) {
   if (rhs.head){
     auto *tail = head = new Node(*rhs.head); // this is making a pair pointer to new node within rhs.head value
     for (auto* p = rhs.head->prev; p; p = p->prev) // as pointer here is p of type Node, until p is nullptr
@@ -14,12 +14,12 @@ Stacklst::Stacklst(const Stacklst &rhs) {
   }
 }
 
-Stacklst::~Stacklst() {
+StackLst::~StackLst() {
   while (head != nullptr)
-    pop();
+    Pop();
 }
 
-Stacklst &Stacklst::operator=(const Stacklst &rhs) {
+StackLst &StackLst::operator=(const StackLst &rhs) {
   // дописать оператор= при разной длине стеков
   if (this != &rhs){
     if (rhs.head){
@@ -47,16 +47,16 @@ Stacklst &Stacklst::operator=(const Stacklst &rhs) {
   return *this;
 }
 
-void Stacklst::push(const Complex &rhs) {
+void StackLst::Push(const Complex &rhs) {
   auto *temp = new Node;
   temp->el = rhs;
   temp->prev = head;
   head = temp;
 }
 
-void Stacklst::pop() {
-  if (empty()){
-    throw std::runtime_error("cannot pop value: stack is empty");
+void StackLst::Pop() {
+  if (IsEmpty()){
+    throw std::runtime_error("cannot Pop value: stack is empty");
   }
   Node* temp;
   temp = head;
@@ -64,19 +64,19 @@ void Stacklst::pop() {
   delete temp;
 }
 
-bool Stacklst::empty() const noexcept{
+bool StackLst::IsEmpty() const noexcept{
   if (head == nullptr) return true;
   return false;
 }
 
-Complex Stacklst::top() const {
-  if (empty()) throw std::runtime_error("cannot get the top value: stack is empty");
+Complex StackLst::Top() const {
+  if (IsEmpty()) throw std::runtime_error("cannot get the Top value: stack is empty");
   else{
     return head->el;
   }
 }
 
-void Stacklst::clear() noexcept {
+void StackLst::Clear() noexcept {
   while (head->prev != nullptr)
-    pop();
+    Pop();
 }
