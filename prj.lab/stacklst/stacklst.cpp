@@ -20,6 +20,7 @@ Stacklst::~Stacklst() {
 }
 
 Stacklst &Stacklst::operator=(const Stacklst &rhs) {
+  // дописать оператор= при разной длине стеков
   if (this != &rhs){
     if (rhs.head){
       auto *tail = head = new Node(*rhs.head); // this is making a pair pointer to new node within rhs.head value
