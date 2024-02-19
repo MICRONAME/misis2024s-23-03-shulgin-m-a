@@ -1,16 +1,40 @@
 //
-// Created by user on 17.02.2024.
+// Created by Егор Федюнин on 12.02.2024.
 //
 
-#include <stacklst/stacklst.hpp>
-#include <iostream>
-int main(){
-  Stacklst a;
-  a.push(Complex(5));
-  a.push(Complex(6));
-  std::cout << a.top() << "\n";
-  Stacklst b(a);
-  std::cout << b.top() << ' ' << a.top() << "\n";
-  b.pop();
-  std::cout << b.top() << ' ' << a.top();
+#define DOCTEST_CONFIG_IMPLEMENT_WITH_MAIN
+#include "doctest.h"
+
+
+#include <Stacklst/Stacklst.hpp>
+
+TEST_CASE("Testing StackArr class") {
+  SUBCASE("Testing methods"){
+    Stacklst arr;
+    Complex val = {1,0};
+    Complex val1 = {3,4};
+    arr.push(val);
+    CHECK(arr.top() == val);
+    arr.push(val1);
+    CHECK(arr.top() == val1);
+    arr.pop();
+    CHECK(arr.top() == val);
+    arr.pop();
+    CHECK(arr.empty());
+    arr.push(val);
+    arr.push(val1);
+    Stacklst arr1{arr};
+    CHECK(arr1.top() == val1);
+    arr.pop();
+    CHECK(arr.top() == val);
+    CHECK(arr1.top() == val1);
+    arr.clear();
+    arr.push(val);
+    arr.push(val1);
+    Stacklst arr2 = arr;
+    CHECK(arr2.top() == val1);
+    arr.pop();
+    CHECK(arr2.top() == val1);
+    CHECK(arr.top() == val);
+  }
 }

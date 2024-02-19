@@ -61,3 +61,8 @@ Complex Stacklst::top() const {
     return head->el;
   }
 }
+
+void Stacklst::clear() noexcept {
+  while (head->prev != nullptr)
+    pop();
+}

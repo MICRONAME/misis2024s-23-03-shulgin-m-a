@@ -28,6 +28,8 @@ class Stacklst{
   ///DELETING ELEMENT FROM THE TOP
   void pop();
 
+  void clear() noexcept;
+
   ///CHECKING EMPTITY
   [[nodiscard]] bool empty() const noexcept;
 
