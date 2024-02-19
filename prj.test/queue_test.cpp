@@ -14,4 +14,10 @@ int main(){
   std::cout << a.top() << "\n";
   a.pop();
   std::cout << a.top() << "\n";
+  Queue b;
+  b.push(Complex(4));
+  a = b;
+  std::cout << a.top() << "\n";
+  a.pop();
+  std::cout << a.top() << "\n";
 }

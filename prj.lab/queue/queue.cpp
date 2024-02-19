@@ -51,14 +51,25 @@ void Queue::pop() {
   delete temp;
 }
 Queue &Queue::operator=(const Queue &rhs) {
-  // same as stacklist
+  // fixed
   if (this != &rhs) {
     if (rhs.head) {
-      tail = head = new Node(*rhs.head); // this is making a pair pointer to new node within rhs.head value
+      if (head->pointer != nullptr)
+        *tail = *head = Node(*rhs.head);
+      else
+        tail = head = new Node(*rhs.head); // this is making a pair pointer to new node within rhs.head value
       for (auto *p = rhs.head->pointer; p; p = p->pointer) // as pointer here is p of type Node, until p is nullptr
-        tail = tail->pointer = new Node(*p); // makes tail pointer value and tail->next pointer valur as p
-
-      tail->pointer = nullptr; //fixing making last tail->next pointer being Node
+        if (tail->pointer != nullptr)
+          *tail = *tail->pointer = Node(*p);
+        else
+          tail = tail->pointer = new Node(*p); // makes tail pointer value and tail->next pointer valur as p
+      while (tail->pointer != nullptr){
+        Node* temp;
+        temp = tail;
+        tail = tail->pointer;
+        delete temp;
+      }
+      //tail->pointer = nullptr; //fixing making last tail->next pointer being Node
     }
   }
   return *this;
