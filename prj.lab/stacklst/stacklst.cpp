@@ -69,7 +69,7 @@ bool StackLst::IsEmpty() const noexcept{
   return false;
 }
 
-Complex StackLst::Top() const {
+const Complex StackLst::Top() const {
   if (IsEmpty()) throw std::runtime_error("cannot get the Top value: stack is empty");
   else{
     return head->el;
@@ -79,4 +79,10 @@ Complex StackLst::Top() const {
 void StackLst::Clear() noexcept {
   while (head->prev != nullptr)
     Pop();
+}
+Complex StackLst::Top() {
+  if (IsEmpty()) throw std::runtime_error("cannot get the Top value: stack is empty");
+  else{
+    return head->el;
+  }
 }

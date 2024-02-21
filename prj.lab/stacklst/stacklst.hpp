@@ -34,7 +34,9 @@ class StackLst{
   [[nodiscard]] bool IsEmpty() const noexcept;
 
   ///GETS Top VALUE
-  [[nodiscard]] Complex Top() const;
+  [[nodiscard]] const Complex Top() const;
+
+  [[nodiscard]] Complex Top();
 
 /*
   ///GETS PRIVATE SIZE VALUE
