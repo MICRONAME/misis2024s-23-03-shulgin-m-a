@@ -92,45 +92,9 @@ std::istream &Complex::ReadFrom(std::istream &istrm) noexcept
   }
   return istrm;
 }
-/*
-///INPUT TEST
-bool Complex::testParse(const std::string &str)
-{
-  using namespace std;
-  istringstream istrm(str);
-  Complex z;
-  istrm >> z;
-  if (istrm.good())
-  {
-    cout << "Read success: " << str << " -> " << z << endl;
-  }
-  else
-  {
-    cout << "Read error : " << str << " -> " << z << endl;
-    //cin >> z;
-    //testParse('{' + to_string(z.re) + ',' + to_string(z.im) + '}');
-  }
-  return istrm.good();
-}*/
 
 ///UNARY MINUS
 Complex Complex::operator-() const noexcept {
   return Complex(-re, -im);
-}
-
-///CONJUGATED VALUE
-void Complex::conjugate() {
-  im *= -1;
-}
-
-///ASSIGNING
-Complex& Complex::operator=(const Complex rhs) {
-  re = rhs.re;
-  im = rhs.im;
-  return *this;
-}
-
-Complex& Complex::operator=(const double rhs) {
-  return operator=(Complex(rhs));
 }
 
