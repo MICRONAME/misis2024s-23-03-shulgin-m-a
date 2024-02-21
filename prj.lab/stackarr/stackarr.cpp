@@ -65,3 +65,7 @@ const Complex Stackarr::top() const {
 void Stackarr::clear() noexcept {
   size_ = 0;
 }
+Complex &Stackarr::top() {
+  if (size_ == 0) throw std::runtime_error("cannot get top value: stack is empty");
+  return data_[size_ - 1];
+}

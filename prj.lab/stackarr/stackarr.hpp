@@ -30,6 +30,8 @@ class Stackarr {
   ///GETS TOP VALUE
   [[nodiscard]] const Complex top() const;
 
+  Complex& top();
+
   ///GETS PRIVATE SIZE VALUE
   [[nodiscard]] std::ptrdiff_t size() const { return size_; }
 
