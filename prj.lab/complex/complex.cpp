@@ -98,3 +98,8 @@ Complex Complex::operator-() const noexcept {
   return Complex(-re, -im);
 }
 
+Complex& Complex::operator=(const Complex rhs) {
+  re = rhs.re;
+  im = rhs.im;
+  return *this;
+}

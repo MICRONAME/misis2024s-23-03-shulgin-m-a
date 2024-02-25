@@ -8,15 +8,12 @@ struct Complex
 {
   ///CONSTRUCTOR
   Complex() = default;
-
   Complex(const Complex&) = default;
-
   explicit Complex(double real) : re(real) {};
-
   Complex(double real, double imaginary) : re(real), im(imaginary) {};
 
   /// ASSIGNING
-  Complex& operator=(const Complex&) = default;
+  Complex& operator=(const Complex rhs);
 
   /// UNARY MINUS
   Complex operator-() const noexcept;
@@ -26,7 +23,6 @@ struct Complex
   bool operator==(const double rhs) const { return (std::abs(re - rhs) <= minDiff) && (std::abs(im) <= minDiff);; }
   bool operator!=(const Complex rhs) const { return !operator==(rhs); }
   bool operator!=(const double rhs) const { return !operator==(rhs); }
-
 
   /// ASSIGNING OPERATIONS
   Complex& operator+=(const Complex rhs);

@@ -1,7 +1,7 @@
 //
 // Created by user on 12.02.2024.
 //
-#include <Stacklst/Stacklst.hpp>
+#include <stacklst/stacklst.hpp>
 #include <stdexcept>
 
 StackLst::StackLst(const StackLst &rhs) {
@@ -54,10 +54,7 @@ void StackLst::Push(const Complex &rhs) {
   head = temp;
 }
 
-void StackLst::Pop() {
-  if (IsEmpty()){
-    throw std::runtime_error("cannot Pop value: stack is empty");
-  }
+void StackLst::Pop() noexcept{
   Node* temp;
   temp = head;
   head = head->prev;
@@ -69,7 +66,7 @@ bool StackLst::IsEmpty() const noexcept{
   return false;
 }
 
-const Complex StackLst::Top() const {
+const Complex& StackLst::Top() const {
   if (IsEmpty()) throw std::runtime_error("cannot get the Top value: stack is empty");
   else{
     return head->el;
@@ -80,7 +77,7 @@ void StackLst::Clear() noexcept {
   while (head->prev != nullptr)
     Pop();
 }
-Complex StackLst::Top() {
+Complex& StackLst::Top() {
   if (IsEmpty()) throw std::runtime_error("cannot get the Top value: stack is empty");
   else{
     return head->el;

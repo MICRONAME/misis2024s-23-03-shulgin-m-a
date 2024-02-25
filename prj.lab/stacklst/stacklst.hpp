@@ -20,13 +20,13 @@ class StackLst{
   ~StackLst();
 
   ///OVERLOADING OPERATOR =
-  StackLst &operator=(const StackLst &rhs);
+  [[nodiscard]] StackLst &operator=(const StackLst &rhs);
 
   ///PushES NEW ELEMENT TO THE Top
   void Push(const Complex &rhs);
 
   ///DELETING ELEMENT FROM THE Top
-  void Pop();
+  void Pop() noexcept;
 
   void Clear() noexcept;
 
@@ -34,9 +34,9 @@ class StackLst{
   [[nodiscard]] bool IsEmpty() const noexcept;
 
   ///GETS Top VALUE
-  [[nodiscard]] const Complex Top() const;
+  [[nodiscard]] const Complex& Top() const;
 
-  [[nodiscard]] Complex Top();
+  [[nodiscard]] Complex& Top();
 
 /*
   ///GETS PRIVATE SIZE VALUE
