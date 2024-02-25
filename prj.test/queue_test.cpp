@@ -6,18 +6,16 @@
 #include <iostream>
 
 int main(){
-  Queue a;
-  //std::cout << a.top() << "\n";
-  a.push(Complex(5));
-  std::cout << a.top() << "\n";
-  a.push(Complex(6));
-  std::cout << a.top() << "\n";
-  a.pop();
-  std::cout << a.top() << "\n";
-  Queue b;
-  b.push(Complex(4));
-  a = b;
-  std::cout << a.top() << "\n";
-  a.pop();
-  std::cout << a.top() << "\n";
+  Queue c;
+  for (int i = 0; i < 100; i++) {
+    c.push(Complex(i));
+    std::cout << c.top() << "\n";
+  }
+  Queue d;
+  for (int i = 101; i < 105; i++) {
+    d.push(Complex(i));
+    std::cout << c.top() << "\n";
+  }
+  c = d;
+  std::cout << c.top() << "\n";
 }

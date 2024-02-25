@@ -19,6 +19,7 @@ class Queue{
   bool empty();
   void push(const Complex& rhs);
   void pop();
+  void clear();
 
  private:
   struct Node{

@@ -15,10 +15,11 @@ Queue::Queue(const Queue &rhs) {
 }
 
 Queue::~Queue() {
-  while (head->pointer != nullptr){
+  while (head != nullptr){
     pop();
   }
 }
+
 Complex Queue::top() {
   if (!empty())
     return head->el;
@@ -29,18 +30,20 @@ bool Queue::empty() {
   if (head == nullptr) return true;
   return false;
 }
+
 void Queue::push(const Complex& rhs) {
-  auto *temp = new Node;
+  Node *temp = new Node;
   temp->el = rhs;
   if (!empty()) {
-    head->pointer = temp;
+    tail->pointer = temp;
     tail = temp;
   }
   else{
-    temp->pointer = head;
     head = temp;
+    tail = temp;
   }
 }
+
 void Queue::pop() {
   if (empty()){
     throw std::runtime_error("cannot pop value: stack is empty");
@@ -50,27 +53,37 @@ void Queue::pop() {
   head = head->pointer;
   delete temp;
 }
+
 Queue &Queue::operator=(const Queue &rhs) {
   // fixed
   if (this != &rhs) {
     if (rhs.head) {
-      if (head->pointer != nullptr)
-        *tail = *head = Node(*rhs.head);
+      Node *helpTail = new Node;
+      if (head != nullptr)
+        *helpTail = *head = Node(*rhs.head);
       else
-        tail = head = new Node(*rhs.head); // this is making a pair pointer to new node within rhs.head value
-      for (auto *p = rhs.head->pointer; p; p = p->pointer) // as pointer here is p of type Node, until p is nullptr
-        if (tail->pointer != nullptr)
-          *tail = *tail->pointer = Node(*p);
+        helpTail = head = new Node(*rhs.head);
+
+      for (auto *p = rhs.head->pointer; p; p = p->pointer)
+        if (helpTail->pointer != nullptr)
+          *helpTail = *helpTail->pointer = Node(*p);
         else
-          tail = tail->pointer = new Node(*p); // makes tail pointer value and tail->next pointer valur as p
-      while (tail->pointer != nullptr){
+          helpTail = helpTail->pointer = new Node(*p);
+
+      while (helpTail->pointer != nullptr){
         Node* temp;
-        temp = tail;
-        tail = tail->pointer;
+        temp = helpTail;
+        helpTail = helpTail->pointer;
         delete temp;
       }
-      //tail->pointer = nullptr; //fixing making last tail->next pointer being Node
+      tail = helpTail;
+      delete helpTail;
     }
   }
   return *this;
+}
+void Queue::clear() {
+  while (head != nullptr){
+    pop();
+  }
 }
