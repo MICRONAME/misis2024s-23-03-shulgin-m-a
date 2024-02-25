@@ -15,9 +15,10 @@ Queue::Queue(const Queue &rhs) {
 }
 
 Queue::~Queue() {
-  while (head != nullptr){
+  while (head->pointer != nullptr){
     pop();
   }
+  delete head;
 }
 
 Complex Queue::top() {
@@ -37,6 +38,8 @@ void Queue::push(const Complex& rhs) {
   if (!empty()) {
     tail->pointer = temp;
     tail = temp;
+    if (head->pointer == nullptr)
+      head->pointer = tail;
   }
   else{
     head = temp;
@@ -64,19 +67,20 @@ Queue &Queue::operator=(const Queue &rhs) {
       else
         helpTail = head = new Node(*rhs.head);
 
-      for (auto *p = rhs.head->pointer; p; p = p->pointer)
+      for (auto *p = rhs.head->pointer; p; p = p->pointer) {
         if (helpTail->pointer != nullptr)
           *helpTail = *helpTail->pointer = Node(*p);
         else
           helpTail = helpTail->pointer = new Node(*p);
-
+      }
+      *tail = *helpTail;
       while (helpTail->pointer != nullptr){
         Node* temp;
         temp = helpTail;
         helpTail = helpTail->pointer;
         delete temp;
       }
-      tail = helpTail;
+
       delete helpTail;
     }
   }
@@ -86,4 +90,5 @@ void Queue::clear() {
   while (head != nullptr){
     pop();
   }
+  delete head;
 }

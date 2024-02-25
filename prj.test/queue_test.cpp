@@ -9,13 +9,27 @@ int main(){
   Queue c;
   for (int i = 0; i < 100; i++) {
     c.push(Complex(i));
-    std::cout << c.top() << "\n";
+    //std::cout << c.top() << "\n";
   }
   Queue d;
   for (int i = 101; i < 105; i++) {
     d.push(Complex(i));
-    std::cout << c.top() << "\n";
+    //std::cout << c.top() << "\n";
   }
   c = d;
+  std::cout << c.top() << "\n";
+  c.pop();
+  std::cout << c.top() << "\n";
+  c.pop();
+  std::cout << c.top() << "\n";
+  c.pop();
+  std::cout << c.top() << "\n";
+  c.push(Complex(1));
+  std::cout << c.top() << "\n";
+  c.pop();
+  std::cout << c.top() << "\n";
+  c.push(Complex(2));
+  std::cout << c.top() << "\n";
+  c.pop();
   std::cout << c.top() << "\n";
 }
