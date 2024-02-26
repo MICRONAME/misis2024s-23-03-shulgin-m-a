@@ -2,24 +2,25 @@
 // Created by user on 19.02.2024.
 //
 
-#ifndef MISIS2023F_23_03_SHULGIN_M_A_PRJ_LAB_QUEUE_QUEUE_HPP_
-#define MISIS2023F_23_03_SHULGIN_M_A_PRJ_LAB_QUEUE_QUEUE_HPP_
+#ifndef MISIS2023F_23_03_SHULGIN_M_A_PRJ_LAB_QueueLst_QueueLst_HPP_
+#define MISIS2023F_23_03_SHULGIN_M_A_PRJ_LAB_QueueLst_QueueLst_HPP_
 
 #include <complex/complex.hpp>
 
-class Queue{
+class QueueLst{
  public:
-  Queue() = default;
-  Queue(const Queue& rhs);
-  ~Queue();
+  QueueLst() = default;
+  QueueLst(const QueueLst& rhs);
+  ~QueueLst();
 
-  Queue& operator=(const Queue& rhs);
+  QueueLst& operator=(const QueueLst& rhs);
 
-  Complex top();
-  bool empty();
-  void push(const Complex& rhs);
-  void pop();
-  void clear();
+  Complex Top();
+  [[nodiscard]] const Complex Top() const;
+  bool IsEmpty() const;
+  void Push(const Complex& rhs);
+  void Pop();
+  void Clear();
 
  private:
   struct Node{
@@ -30,4 +31,4 @@ class Queue{
  Node* tail = nullptr;
 };
 
-#endif //MISIS2023F_23_03_SHULGIN_M_A_PRJ_LAB_QUEUE_QUEUE_HPP_
+#endif //MISIS2023F_23_03_SHULGIN_M_A_PRJ_LAB_QueueLst_QueueLst_HPP_

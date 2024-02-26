@@ -6,30 +6,30 @@
 #include <iostream>
 
 int main(){
-  Queue c;
+  QueueLst c;
   for (int i = 0; i < 100; i++) {
-    c.push(Complex(i));
-    //std::cout << c.top() << "\n";
+    c.Push(Complex(i));
+    //std::cout << c.Top() << "\n";
   }
-  Queue d;
+  QueueLst d;
   for (int i = 101; i < 105; i++) {
-    d.push(Complex(i));
-    //std::cout << c.top() << "\n";
+    d.Push(Complex(i));
+    //std::cout << c.Top() << "\n";
   }
   c = d;
-  std::cout << c.top() << "\n";
-  c.pop();
-  std::cout << c.top() << "\n";
-  c.pop();
-  std::cout << c.top() << "\n";
-  c.pop();
-  std::cout << c.top() << "\n";
-  c.push(Complex(1));
-  std::cout << c.top() << "\n";
-  c.pop();
-  std::cout << c.top() << "\n";
-  c.push(Complex(2));
-  std::cout << c.top() << "\n";
-  c.pop();
-  std::cout << c.top() << "\n";
+  std::cout << c.Top() << "\n";
+  c.Pop();
+  std::cout << c.Top() << "\n";
+  c.Pop();
+  std::cout << c.Top() << "\n";
+  c.Pop();
+  std::cout << c.Top() << "\n";
+  c.Push(Complex(1));
+  std::cout << c.Top() << "\n";
+  c.Pop();
+  std::cout << c.Top() << "\n";
+  c.Push(Complex(2));
+  std::cout << c.Top() << "\n";
+  c.Pop();
+  std::cout << c.Top() << "\n";
 }

@@ -4,7 +4,7 @@
 #include <queue/queue.hpp>
 #include <stdexcept>
 
-Queue::Queue(const Queue &rhs) {
+QueueLst::QueueLst(const QueueLst &rhs) {
   if (rhs.head) {
     tail = head = new Node(*rhs.head); // this is making a pair pointer to new node within rhs.head value
     for (auto *p = rhs.head->pointer; p; p = p->pointer) // as pointer here is p of type Node, until p is nullptr
@@ -14,28 +14,28 @@ Queue::Queue(const Queue &rhs) {
   }
 }
 
-Queue::~Queue() {
+QueueLst::~QueueLst() {
   while (head->pointer != nullptr){
-    pop();
+    Pop();
   }
   delete head;
 }
 
-Complex Queue::top() {
-  if (!empty())
+Complex QueueLst::Top() {
+  if (!IsEmpty())
     return head->el;
-  else throw std::runtime_error("cannot get top value: queue is empty");
+  else throw std::runtime_error("cannot get Top value: QueueLst is Empty");
 }
 
-bool Queue::empty() {
+bool QueueLst::IsEmpty() const{
   if (head == nullptr) return true;
   return false;
 }
 
-void Queue::push(const Complex& rhs) {
+void QueueLst::Push(const Complex& rhs) {
   Node *temp = new Node;
   temp->el = rhs;
-  if (!empty()) {
+  if (!IsEmpty()) {
     tail->pointer = temp;
     tail = temp;
     if (head->pointer == nullptr)
@@ -47,9 +47,9 @@ void Queue::push(const Complex& rhs) {
   }
 }
 
-void Queue::pop() {
-  if (empty()){
-    throw std::runtime_error("cannot pop value: stack is empty");
+void QueueLst::Pop() {
+  if (IsEmpty()){
+    throw std::runtime_error("cannot Pop value: queue is Empty");
   }
   Node* temp;
   temp = head;
@@ -57,7 +57,7 @@ void Queue::pop() {
   delete temp;
 }
 
-Queue &Queue::operator=(const Queue &rhs) {
+QueueLst &QueueLst::operator=(const QueueLst &rhs) {
   // fixed
   if (this != &rhs) {
     if (rhs.head) {
@@ -86,9 +86,14 @@ Queue &Queue::operator=(const Queue &rhs) {
   }
   return *this;
 }
-void Queue::clear() {
+void QueueLst::Clear() {
   while (head != nullptr){
-    pop();
+    Pop();
   }
   delete head;
+}
+const Complex QueueLst::Top() const {
+  if (!IsEmpty())
+    return head->el;
+  else throw std::runtime_error("cannot get Top value: QueueLst is Empty");
 }
