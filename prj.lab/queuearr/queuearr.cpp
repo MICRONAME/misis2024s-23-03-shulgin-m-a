@@ -10,9 +10,9 @@ QueueArr::QueueArr() {
   data_ = new Complex[capacity_];
 }
 
-QueueArr::QueueArr(const QueueArr &) {
+//QueueArr::QueueArr(const QueueArr &rhs) {
 
-}
+//}
 
 QueueArr::~QueueArr() {
   delete[] data_;
@@ -27,7 +27,7 @@ const Complex QueueArr::Top() const {
 }
 
 bool QueueArr::IsEmpty() const noexcept {
-  // когда сравнялись он может быть и полный
+  // когда сравнялись он может быть и полный. возможно этот случай в пуше обработан, надо тесты
   if (head_ == tail_) return true;
   return false;
 }
@@ -67,6 +67,7 @@ void QueueArr::Push(const Complex &rhs) {
     capacity_ *= 2;
     delete[] temp;
   }
+  // дефолтный пуш
   else{
     data_[tail_] = rhs;
     tail_++;
@@ -74,12 +75,14 @@ void QueueArr::Push(const Complex &rhs) {
 }
 
 void QueueArr::Pop() noexcept {
+  // проверить
   if (!IsEmpty()){
-    if (head_ == capacity_){
-
+    if (head_++ == capacity_){
+      head_ = head_ % capacity_;
     }
+    else
+      head_++;
   }
-  head_++;
 }
 
 QueueArr& QueueArr::operator=(const QueueArr &rhs) {

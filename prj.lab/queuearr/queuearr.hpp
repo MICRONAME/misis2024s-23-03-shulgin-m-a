@@ -11,7 +11,7 @@
 class QueueArr{
  public:
   QueueArr();
-  QueueArr(const QueueArr&);
+  QueueArr(const QueueArr& rhs) = default;
   ~QueueArr();
 
   Complex Top();
