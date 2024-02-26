@@ -10,39 +10,26 @@
 
 class StackLst{
  public:
-  ///DEFAULT CONSTRUCTOR
   StackLst() = default;
 
-  ///COPY CONSTRUCTOR
-  StackLst(const StackLst &rhs);
+  StackLst(const StackLst&);
 
-  ///DESTRUCTOR
   ~StackLst();
 
-  ///OVERLOADING OPERATOR =
-  [[nodiscard]] StackLst &operator=(const StackLst &rhs);
+  [[nodiscard]] StackLst& operator=(const StackLst&);
 
-  ///PushES NEW ELEMENT TO THE Top
-  void Push(const Complex &rhs);
+  bool IsEmpty() const noexcept;
 
-  ///DELETING ELEMENT FROM THE Top
   void Pop() noexcept;
 
-  void Clear() noexcept;
-
-  ///CHECKING EMPTITY
-  [[nodiscard]] bool IsEmpty() const noexcept;
-
-  ///GETS Top VALUE
-  [[nodiscard]] const Complex& Top() const;
+  void Push(const Complex& val);
 
   [[nodiscard]] Complex& Top();
 
-/*
-  ///GETS PRIVATE SIZE VALUE
-  [[nodiscard]] std::ptrdiff_t size() const { return size_; }
-  [[nodiscard]] std::ptrdiff_t capacity() const { return capacity_; }
-*/
+  [[nodiscard]] const Complex& Top() const;
+
+  void Clear() noexcept;
+
  private:
   struct Node{
     Complex el;
