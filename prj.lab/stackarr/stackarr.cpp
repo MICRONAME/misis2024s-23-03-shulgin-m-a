@@ -4,12 +4,12 @@
 #include <stackarr/stackarr.hpp>
 #include <stdexcept>
 
-Stackarr::Stackarr() {
+StackArr::StackArr() {
   size_ = 0;
   capacity_ = 10;
   data_ = new Complex[capacity_];
 }
-Stackarr::Stackarr(const Stackarr &rhs) {
+StackArr::StackArr(const StackArr &rhs) {
   size_ = rhs.size_;
   if (size_ > capacity_){
     capacity_ = 2 * size_;
@@ -19,11 +19,11 @@ Stackarr::Stackarr(const Stackarr &rhs) {
     data_[i] = rhs.data_[i];
 }
 
-Stackarr::~Stackarr() {
+StackArr::~StackArr() {
   delete[] data_;
 }
 
-Stackarr &Stackarr::operator=(const Stackarr &rhs) {
+StackArr &StackArr::operator=(const StackArr &rhs) {
   size_ = rhs.size_;
   if (size_ > capacity_){
     capacity_ = 2 * size_;
@@ -36,7 +36,7 @@ Stackarr &Stackarr::operator=(const Stackarr &rhs) {
   return *this;
 }
 
-void Stackarr::push(const Complex &rhs) {
+void StackArr::Push(const Complex &rhs) {
   size_++;
   if (capacity_ == size_ + 1){
     capacity_ = 2 * size_;
@@ -48,24 +48,24 @@ void Stackarr::push(const Complex &rhs) {
   data_[size_ - 1] = rhs;
 }
 
-void Stackarr::pop() noexcept{
-  //if (size_ == 0) throw std::runtime_error("cannot pop value: stack is empty");
+void StackArr::Pop() noexcept{
+  //if (size_ == 0) throw std::runtime_error("cannot Pop value: stack is IsEmpty");
   size_--;
 }
 
-bool Stackarr::empty() const noexcept{
+bool StackArr::IsEmpty() const noexcept{
   if (size_ == 0) return true;
   return false;
 }
 
-const Complex Stackarr::top() const {
-  if (size_ == 0) throw std::runtime_error("cannot get top value: stack is empty");
+const Complex StackArr::Top() const {
+  if (size_ == 0) throw std::runtime_error("cannot get Top value: stack is IsEmpty");
   return data_[size_ - 1];
 }
-void Stackarr::clear() noexcept {
+void StackArr::Clear() noexcept {
   size_ = 0;
 }
-Complex &Stackarr::top() {
-  if (size_ == 0) throw std::runtime_error("cannot get top value: stack is empty");
+Complex &StackArr::Top() {
+  if (size_ == 0) throw std::runtime_error("cannot get Top value: stack is IsEmpty");
   return data_[size_ - 1];
 }

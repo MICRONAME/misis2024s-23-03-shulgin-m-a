@@ -10,31 +10,31 @@
 
 TEST_CASE("Testing StackArr class") {
   SUBCASE("Testing methods"){
-    Stackarr arr;
+    StackArr arr;
     Complex val = {1,0};
     Complex val1 = {3,4};
-    arr.push(val);
-    CHECK(arr.top() == val);
-    arr.push(val1);
-    CHECK(arr.top() == val1);
-    arr.pop();
-    CHECK(arr.top() == val);
-    arr.pop();
-    CHECK(arr.empty());
-    arr.push(val);
-    arr.push(val1);
-    Stackarr arr1{arr};
-    CHECK(arr1.top() == val1);
-    arr.pop();
-    CHECK(arr.top() == val);
-    CHECK(arr1.top() == val1);
-    arr.clear();
-    arr.push(val);
-    arr.push(val1);
-    Stackarr arr2 = arr;
-    CHECK(arr2.top() == val1);
-    arr.pop();
-    CHECK(arr2.top() == val1);
-    CHECK(arr.top() == val);
+    arr.Push(val);
+    CHECK(arr.Top() == val);
+    arr.Push(val1);
+    CHECK(arr.Top() == val1);
+    arr.Pop();
+    CHECK(arr.Top() == val);
+    arr.Pop();
+    CHECK(arr.IsEmpty());
+    arr.Push(val);
+    arr.Push(val1);
+    StackArr arr1{arr};
+    CHECK(arr1.Top() == val1);
+    arr.Pop();
+    CHECK(arr.Top() == val);
+    CHECK(arr1.Top() == val1);
+    arr.Clear();
+    arr.Push(val);
+    arr.Push(val1);
+    StackArr arr2 = arr;
+    CHECK(arr2.Top() == val1);
+    arr.Pop();
+    CHECK(arr2.Top() == val1);
+    CHECK(arr.Top() == val);
   }
 }
