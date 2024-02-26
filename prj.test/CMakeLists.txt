@@ -18,3 +18,7 @@ target_link_libraries(stacklst_test complex)
 add_executable(queue_test queue_test.cpp)
 target_link_libraries(queue_test queue)
 target_link_libraries(queue_test complex)
+
+add_executable(queuearr_test queuearr_test.cpp)
+target_link_libraries(queuearr_test queue)
+target_link_libraries(queuearr_test complex)
