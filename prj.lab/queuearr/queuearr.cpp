@@ -15,7 +15,7 @@ QueueArr::QueueArr(const QueueArr &) {
 }
 
 QueueArr::~QueueArr() {
-  delete data_;
+  delete[] data_;
 }
 
 Complex QueueArr::Top() {
@@ -27,12 +27,14 @@ const Complex QueueArr::Top() const {
 }
 
 bool QueueArr::IsEmpty() const noexcept {
+  // когда сравнялись он может быть и полный
   if (head_ == tail_) return true;
   return false;
 }
 
 void QueueArr::Push(const Complex &rhs) {
-  // дописать
+  // вроде как дописано
+  //это случай когда хвост дошел до конца
   if (tail_ == capacity_) {
     if (head_ != 0) {
       tail_ = tail_ % capacity_;
@@ -48,9 +50,23 @@ void QueueArr::Push(const Complex &rhs) {
       data_[tail_] = rhs;
     }
   }
-  /*else if (tail_ + 1 == head_){
-
-  }*/
+  //это случай когда уже полная очередь
+  else if (tail_ + 1 == head_){
+    auto* temp = new Complex[capacity_ * 2];
+    std::ptrdiff_t tempPointer = 0;
+    for (std::ptrdiff_t i = head_; i < capacity_; i++){
+      temp[tempPointer] = data_[i];
+      tempPointer++;
+    }
+    for (std::ptrdiff_t i = 0; i < tail_; i++){
+      temp[tempPointer] = data_[i];
+      tempPointer++;
+    }
+    head_ = 0;
+    tail_ = capacity_;
+    capacity_ *= 2;
+    delete[] temp;
+  }
   else{
     data_[tail_] = rhs;
     tail_++;
