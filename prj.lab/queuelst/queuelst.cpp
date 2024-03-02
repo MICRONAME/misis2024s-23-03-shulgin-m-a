@@ -1,7 +1,7 @@
 //
 // Created by user on 19.02.2024.
 //
-#include <queue/queue.hpp>
+#include <queuelst/queuelst.hpp>
 #include <stdexcept>
 
 QueueLst::QueueLst(const QueueLst &rhs) {
@@ -49,7 +49,7 @@ void QueueLst::Push(const Complex& rhs) {
 
 void QueueLst::Pop() {
   if (IsEmpty()){
-    throw std::runtime_error("cannot Pop value: queue is Empty");
+    throw std::runtime_error("cannot Pop value: queuelst is Empty");
   }
   Node* temp;
   temp = head;

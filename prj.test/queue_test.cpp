@@ -2,7 +2,7 @@
 // Created by user on 19.02.2024.
 //
 
-#include <queue/queue.hpp>
+#include <queuelst/queuelst.hpp>
 #include <iostream>
 
 int main(){
