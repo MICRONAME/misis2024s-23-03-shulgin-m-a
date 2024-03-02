@@ -30,6 +30,8 @@ class StackArr {
   ///GETS TOP VALUE
   [[nodiscard]] const Complex& Top() const;
 
+  std::ptrdiff_t Size(){ return size_; };
+
   Complex& Top();
 
   void Clear() noexcept;
