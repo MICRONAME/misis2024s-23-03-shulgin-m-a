@@ -58,7 +58,7 @@ bool StackArr::IsEmpty() const noexcept{
   return false;
 }
 
-const Complex StackArr::Top() const {
+const Complex& StackArr::Top() const {
   if (size_ == 0) throw std::runtime_error("cannot get Top value: stack is IsEmpty");
   return data_[size_ - 1];
 }

@@ -1,7 +1,7 @@
 //
 // Created by user on 05.02.2024.
 //
-
+#pragma once
 #ifndef MISIS2023F_23_03_SHULGIN_M_A_PRJ_LAB_StackArr_StackArr_HPP_
 #define MISIS2023F_23_03_SHULGIN_M_A_PRJ_LAB_StackArr_StackArr_HPP_
 
@@ -28,7 +28,7 @@ class StackArr {
   ///CHECKING EMPTITY
   [[nodiscard]] bool IsEmpty() const noexcept;
   ///GETS TOP VALUE
-  [[nodiscard]] const Complex Top() const;
+  [[nodiscard]] const Complex& Top() const;
 
   Complex& Top();
 
