@@ -16,7 +16,7 @@ class QueueLst{
 
   ~QueueLst();
 
-  [[nodiscard]] QueueLst& operator=(const QueueLst&);
+  QueueLst& operator=(const QueueLst&);
 
   [[nodiscard]] bool IsEmpty() const noexcept;
 
