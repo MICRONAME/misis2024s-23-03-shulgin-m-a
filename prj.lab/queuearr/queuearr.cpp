@@ -1,91 +1,107 @@
 //
 // Created by user on 26.02.2024.
 //
-#include "queuearr.hpp"
+#include <queuearr/queuearr.hpp>
+#include <stdexcept>
 
 QueueArr::QueueArr() {
   head_ = 0;
-  tail_ = 0;
+  tail_ = 1;
   capacity_ = 10;
   data_ = new Complex[capacity_];
 }
 
-//QueueArr::QueueArr(const QueueArr &rhs) {
-
-//}
+QueueArr::QueueArr(const QueueArr &rhs){
+  if (!rhs.IsEmpty()){
+    data_ = new Complex[rhs.capacity_];
+    for (std::ptrdiff_t i = rhs.head_; i < rhs.tail_; i++) {
+      data_[i - rhs.head_] = rhs.data_[i];
+    }
+    tail_ = rhs.tail_;
+    capacity_ = rhs.capacity_;
+    head_ = 0;
+  }
+}
 
 QueueArr::~QueueArr() {
   delete[] data_;
 }
 
-Complex QueueArr::Top() {
-  return data_[head_];
+Complex& QueueArr::Top() {
+  if (IsEmpty())
+    throw std::out_of_range("Queue is empty");
+  else
+    return data_[head_];
 }
 
-const Complex QueueArr::Top() const {
-  return data_[head_];
+const Complex& QueueArr::Top() const {
+  if (IsEmpty())
+    throw std::out_of_range("Queue is empty");
+  else
+    return data_[head_];
 }
 
 bool QueueArr::IsEmpty() const noexcept {
   // когда сравнялись он может быть и полный. возможно этот случай в пуше обработан, надо тесты
-  if (head_ == tail_) return true;
+  if (head_ == tail_ - 1) return true;
   return false;
 }
 
 void QueueArr::Push(const Complex &rhs) {
-  // вроде как дописано
-  //это случай когда хвост дошел до конца
-  if (tail_ == capacity_) {
-    if (head_ != 0) {
-      tail_ = tail_ % capacity_;
-      data_[tail_] = rhs;
-      tail_++;
-    }
-    else {
-      auto* temp = new Complex[capacity_ * 2];
-      std::copy(data_, data_ + capacity_, temp);
-      std::swap(data_, temp);
-      delete[] temp;
-      capacity_ *= 2;
-      data_[tail_] = rhs;
-    }
+  //сильно не знаю работает ли
+  if (head_ != tail_ % capacity_){
+    data_[(tail_ - 1) % capacity_] = rhs;
+    tail_++;
   }
-  //это случай когда уже полная очередь
-  else if (tail_ + 1 == head_){
-    auto* temp = new Complex[capacity_ * 2];
-    std::ptrdiff_t tempPointer = 0;
-    for (std::ptrdiff_t i = head_; i < capacity_; i++){
-      temp[tempPointer] = data_[i];
-      tempPointer++;
+  else
+  {
+    auto* ndata = new Complex[capacity_ * 2];
+    for (std::ptrdiff_t i = head_; i < capacity_; i++) {
+      ndata[i - head_] = data_[i];
     }
-    for (std::ptrdiff_t i = 0; i < tail_; i++){
-      temp[tempPointer] = data_[i];
-      tempPointer++;
+    for (std::ptrdiff_t i = capacity_ - tail_ % capacity_ + 1; i < tail_; i++) {
+      ndata[i - head_] = data_[i % capacity_];
     }
-    head_ = 0;
-    tail_ = capacity_;
+    std::swap(ndata, data_);
+    delete[] ndata;
     capacity_ *= 2;
-    delete[] temp;
-  }
-  // дефолтный пуш
-  else{
-    data_[tail_] = rhs;
+    head_ = 0;
+    data_[tail_ - 1] = rhs;
     tail_++;
   }
 }
 
 void QueueArr::Pop() noexcept {
   // проверить
-  if (!IsEmpty()){
-    if (head_++ == capacity_){
-      head_ = head_ % capacity_;
-    }
-    else
-      head_++;
+  if (head_ != (tail_ - 1) % capacity_){
+    head_++;
+    head_ %= capacity_;
   }
 }
 
 QueueArr& QueueArr::operator=(const QueueArr &rhs) {
+  if (this != &rhs){
+    if (!rhs.IsEmpty()){
+      if (rhs.capacity_ > capacity_) {
+        delete[] data_;
+        data_ = new Complex[rhs.capacity_];
+        for (std::ptrdiff_t i = rhs.head_; i < rhs.tail_; i++) {
+          data_[i - rhs.head_] = rhs.data_[i];
+        }
+        tail_ = rhs.tail_;
+        capacity_ = rhs.capacity_;
+        head_ = 0;
+      }
+      else{
+        for (std::ptrdiff_t i = rhs.head_; i < rhs.tail_; i++) {
+          data_[i - rhs.head_] = rhs.data_[i];
+        }
+        tail_ = rhs.tail_;
+        capacity_ = rhs.capacity_;
+        head_ = 0;
+      }
+    }
+  }
   return *this;
 }
 
