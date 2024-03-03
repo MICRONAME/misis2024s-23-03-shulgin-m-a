@@ -1,35 +1,78 @@
-//
-// Created by user on 19.02.2024.
-//
-
+#define DOCTEST_CONFIG_IMPLEMENT_WITH_MAIN
+#include "doctest.h"
 #include <queuelst/queuelst.hpp>
-#include <iostream>
 
-int main(){
-  QueueLst c;
-  for (int i = 0; i < 100; i++) {
-    c.Push(Complex(i));
-    //std::cout << c.Top() << "\n";
+TEST_CASE("cons") {
+  SUBCASE("default") {
+    QueueLst a;
+    CHECK(a.Size() == 0);
   }
-  QueueLst d;
-  for (int i = 101; i < 105; i++) {
-    d.Push(Complex(i));
-    //std::cout << c.Top() << "\n";
+  SUBCASE("copy") {
+    QueueLst a;
+    for (int i = 0; i < 500; ++i)
+      a.Push(Complex(1, i));
+
+    QueueLst b(a);
+    CHECK(b.Size() == 500);
+    CHECK(b.Top() == a.Top());
+
+    b.Push(Complex());
+    CHECK(b.Size() == 501);
+    CHECK(a.Size() == 500);
+    CHECK(b.Top() == a.Top());
   }
-  c = d;
-  std::cout << c.Top() << "\n";
-  c.Pop();
-  std::cout << c.Top() << "\n";
-  c.Pop();
-  std::cout << c.Top() << "\n";
-  c.Pop();
-  std::cout << c.Top() << "\n";
-  c.Push(Complex(1));
-  std::cout << c.Top() << "\n";
-  c.Pop();
-  std::cout << c.Top() << "\n";
-  c.Push(Complex(2));
-  std::cout << c.Top() << "\n";
-  c.Pop();
-  std::cout << c.Top() << "\n";
+}
+
+TEST_CASE("appr") {
+  SUBCASE("appr with empty") {
+    QueueLst a;
+    QueueLst b;
+    for (int i = 0; i < 5; ++i)
+      b.Push(Complex(1, i));
+    a = b;
+    CHECK(a.Size() == 5);
+    CHECK(b.Top() == a.Top());
+
+    b.Push(Complex());
+    CHECK(b.Size() == 6);
+    CHECK(a.Size() == 5);
+    CHECK(b.Top() == a.Top());
+  }
+  SUBCASE("appr with full") {
+    QueueLst a;
+    QueueLst b;
+    for (int i = 0; i < 5; ++i)
+    {
+      a.Push(Complex(1, i));
+      b.Push(Complex(i, 2));
+    }
+    a = b;
+    CHECK(a.Size() == 5);
+    CHECK(b.Top() == a.Top());
+    b.Push(Complex());
+    CHECK(b.Size() == 6);
+    CHECK(a.Size() == 5);
+    CHECK(b.Top() == a.Top());
+  }
+}
+
+TEST_CASE("Push, Pop & Top"){
+  QueueLst a;
+  CHECK(a.Size() == 0);
+  for (int i = 0; i < 1000; ++i)
+  {
+    a.Push(Complex(i, i));
+    CHECK(a.Size() == i + 1);
+    CHECK(a.Top() == Complex(0, 0));
+  }
+
+  for (int i = 1; i < 1000; ++i)
+  {
+    a.Pop();
+    CHECK(a.Size() == 1000 - i);
+    CHECK(a.Top() == Complex(i, i));
+  }
+  a.Pop();
+  CHECK_THROWS(a.Top());
+  a.Pop();
 }

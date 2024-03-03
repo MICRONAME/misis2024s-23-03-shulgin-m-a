@@ -5,6 +5,7 @@
 #include <stdexcept>
 
 StackLst::StackLst(const StackLst &rhs) {
+  size_ = rhs.size_;
   if (rhs.head){
     auto *tail = head = new Node(*rhs.head); // this is making a pair pointer to new node within rhs.head value
     for (auto* p = rhs.head->prev; p; p = p->prev) // as pointer here is p of type Node, until p is nullptr
@@ -15,16 +16,16 @@ StackLst::StackLst(const StackLst &rhs) {
 }
 
 StackLst::~StackLst() {
-  while (head != nullptr)
-    Pop();
+  Clear();
 }
 
 StackLst &StackLst::operator=(const StackLst &rhs) {
   // дописать оператор= при разной длине стеков
+  size_ = rhs.size_;
   if (this != &rhs){
     if (rhs.head){
       Node* tail;
-      if (head->prev != nullptr)
+      if (head != nullptr)
         *tail = *head = Node(*rhs.head);
       else
         tail = head = new Node(*rhs.head);
@@ -52,13 +53,17 @@ void StackLst::Push(const Complex &rhs) {
   temp->el = rhs;
   temp->prev = head;
   head = temp;
+  size_++;
 }
 
 void StackLst::Pop() noexcept{
-  Node* temp;
-  temp = head;
-  head = head->prev;
-  delete temp;
+  if (head != nullptr){
+    Node *temp;
+    temp = head;
+    head = head->prev;
+    delete temp;
+    size_--;
+  }
 }
 
 bool StackLst::IsEmpty() const noexcept{
@@ -74,8 +79,9 @@ const Complex& StackLst::Top() const {
 }
 
 void StackLst::Clear() noexcept {
-  while (head->prev != nullptr)
+  while (head != nullptr)
     Pop();
+  size_ = 0;
 }
 Complex& StackLst::Top() {
   if (IsEmpty()) throw std::runtime_error("cannot get the Top value: stack is empty");

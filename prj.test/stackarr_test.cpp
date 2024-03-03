@@ -1,6 +1,6 @@
 #define DOCTEST_CONFIG_IMPLEMENT_WITH_MAIN
 #include "doctest.h"
-#include <StackArr/StackArr.hpp>
+#include <stackarr/stackarr.hpp>
 
 TEST_CASE("cons") {
   SUBCASE("default") {
@@ -10,10 +10,11 @@ TEST_CASE("cons") {
   SUBCASE("copy") {
     StackArr a;
     for (int i = 0; i < 500; ++i)
-      a.Push(Complex());
+      a.Push(Complex(1, 1));
 
     StackArr b(a);
     CHECK(b.Size() == 500);
+    CHECK(b.Top() == a.Top());
 
     b.Push(Complex());
     CHECK(b.Size() == 501);
@@ -26,10 +27,10 @@ TEST_CASE("appr") {
     StackArr a;
     StackArr b;
     for (int i = 0; i < 5; ++i)
-      b.Push(Complex());
+      b.Push(Complex(1, 1));
     a = b;
     CHECK(a.Size() == 5);
-
+    CHECK(b.Top() == a.Top());
     b.Push(Complex());
     CHECK(b.Size() == 6);
     CHECK(a.Size() == 5);
@@ -39,12 +40,12 @@ TEST_CASE("appr") {
     StackArr b;
     for (int i = 0; i < 5; ++i)
     {
-      a.Push(Complex());
+      a.Push(Complex(1, 1));
       b.Push(Complex());
     }
     a = b;
     CHECK(a.Size() == 5);
-
+    CHECK(b.Top() == a.Top());
     b.Push(Complex());
     CHECK(b.Size() == 6);
     CHECK(a.Size() == 5);

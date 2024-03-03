@@ -6,21 +6,30 @@
 #define MISIS2023F_23_03_SHULGIN_M_A_PRJ_LAB_QueueLst_QueueLst_HPP_
 
 #include <complex/complex.hpp>
+#include <cstdint>
 
 class QueueLst{
  public:
   QueueLst() = default;
-  QueueLst(const QueueLst& rhs);
+
+  QueueLst(const QueueLst&);
+
   ~QueueLst();
 
-  QueueLst& operator=(const QueueLst& rhs);
+  [[nodiscard]] QueueLst& operator=(const QueueLst&);
 
-  Complex Top();
-  [[nodiscard]] const Complex Top() const;
-  bool IsEmpty() const;
-  void Push(const Complex& rhs);
-  void Pop();
-  void Clear();
+  [[nodiscard]] bool IsEmpty() const noexcept;
+
+  void Pop() noexcept;
+
+  void Push(const Complex& val);
+
+  [[nodiscard]] Complex& Top();
+
+  [[nodiscard]] const Complex& Top() const;
+
+  void Clear() noexcept;
+  int64_t Size(){return size;};
 
  private:
   struct Node{
@@ -29,6 +38,7 @@ class QueueLst{
  };
  Node* head = nullptr;
  Node* tail = nullptr;
+ int64_t size = 0;
 };
 
 #endif //MISIS2023F_23_03_SHULGIN_M_A_PRJ_LAB_QueueLst_QueueLst_HPP_

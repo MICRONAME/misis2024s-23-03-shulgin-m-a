@@ -5,6 +5,7 @@
 #include <stdexcept>
 
 QueueLst::QueueLst(const QueueLst &rhs) {
+  size = rhs.size;
   if (rhs.head) {
     tail = head = new Node(*rhs.head); // this is making a pair pointer to new node within rhs.head value
     for (auto *p = rhs.head->pointer; p; p = p->pointer) // as pointer here is p of type Node, until p is nullptr
@@ -15,19 +16,18 @@ QueueLst::QueueLst(const QueueLst &rhs) {
 }
 
 QueueLst::~QueueLst() {
-  while (head->pointer != nullptr){
+  while (head != nullptr){
     Pop();
   }
-  delete head;
 }
 
-Complex QueueLst::Top() {
+Complex& QueueLst::Top() {
   if (!IsEmpty())
     return head->el;
   else throw std::runtime_error("cannot get Top value: QueueLst is Empty");
 }
 
-bool QueueLst::IsEmpty() const{
+bool QueueLst::IsEmpty() const noexcept{
   if (head == nullptr) return true;
   return false;
 }
@@ -45,20 +45,22 @@ void QueueLst::Push(const Complex& rhs) {
     head = temp;
     tail = temp;
   }
+  size++;
 }
 
-void QueueLst::Pop() {
-  if (IsEmpty()){
-    throw std::runtime_error("cannot Pop value: queuelst is Empty");
+void QueueLst::Pop() noexcept{
+  if (head != nullptr) {
+    Node *temp;
+    temp = head;
+    head = head->pointer;
+    delete temp;
+    size--;
   }
-  Node* temp;
-  temp = head;
-  head = head->pointer;
-  delete temp;
 }
 
 QueueLst &QueueLst::operator=(const QueueLst &rhs) {
   // fixed
+  size = rhs.size;
   if (this != &rhs) {
     if (rhs.head) {
       Node *helpTail = new Node;
@@ -86,13 +88,13 @@ QueueLst &QueueLst::operator=(const QueueLst &rhs) {
   }
   return *this;
 }
-void QueueLst::Clear() {
+void QueueLst::Clear() noexcept{
   while (head != nullptr){
     Pop();
   }
   delete head;
 }
-const Complex QueueLst::Top() const {
+const Complex& QueueLst::Top() const {
   if (!IsEmpty())
     return head->el;
   else throw std::runtime_error("cannot get Top value: QueueLst is Empty");

@@ -6,7 +6,7 @@
 #define MISIS2023F_23_03_SHULGIN_M_A_PRJ_LAB_StackLst_StackLst_HPP_
 
 #include <complex/complex.hpp>
-#include <cstddef>
+#include <cstdint>
 
 class StackLst{
  public:
@@ -30,12 +30,15 @@ class StackLst{
 
   void Clear() noexcept;
 
+  [[nodiscard]] int64_t Size() const noexcept { return size_; }
+
  private:
   struct Node{
     Complex el;
     Node* prev = nullptr;
   };
   Node* head = nullptr;
+  int64_t size_ = 0;
 };
 
 
