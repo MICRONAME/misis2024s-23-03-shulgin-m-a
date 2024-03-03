@@ -33,6 +33,7 @@ class QueueLst{
 
  private:
   struct Node{
+    Node(const Complex& v, Node* n) : el(v), pointer(n) {}
    Complex el;
    Node* pointer = nullptr;
  };
