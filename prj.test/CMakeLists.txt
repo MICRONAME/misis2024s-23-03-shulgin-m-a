@@ -18,3 +18,6 @@ target_link_libraries(queue_test queuelst)
 
 add_executable(queuearr_test queuearr_test.cpp)
 target_link_libraries(queuearr_test queuearr)
+
+add_executable(queuelstpr_test queuelstpr_test.cpp)
+target_link_libraries(queuelstpr_test queuelstpr)
