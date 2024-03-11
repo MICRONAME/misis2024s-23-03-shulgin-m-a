@@ -48,7 +48,7 @@ bool QueueArr::IsEmpty() const noexcept {
 }
 
 void QueueArr::Push(const Complex &rhs) {
-  //сильно не знаю работает ли
+  //need to fix circle moving inside queue
   if (head_ != tail_ % capacity_){
     data_[(tail_ - 1) % capacity_] = rhs;
     tail_++;

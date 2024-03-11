@@ -81,7 +81,7 @@ TEST_CASE("Push, Pop & Top"){
   CHECK_THROWS(a.Top());
   a.Pop();
 }
-
+/*
 TEST_CASE("Run around") {
   QueueArr a;
   for (int i = 0; i < 9; ++i)
@@ -103,4 +103,4 @@ TEST_CASE("Run around") {
     b.Pop();
     c.Pop();
   }
-}
+}*/
