@@ -6,25 +6,23 @@
 
 QueueArr::QueueArr() {
   head_ = 0;
-  tail_ = 1;
+  tail_ = 0;
   capacity_ = 10;
   data_ = new Complex[capacity_];
 }
 
 QueueArr::QueueArr(const QueueArr &rhs){
   if (!rhs.IsEmpty()){
-    data_ = new Complex[rhs.capacity_];
-    for (std::ptrdiff_t i = rhs.head_; i < rhs.tail_; i++) {
-      data_[i - rhs.head_] = rhs.data_[i];
-    }
-    tail_ = rhs.tail_;
     capacity_ = rhs.capacity_;
-    head_ = 0;
+    data_ = new Complex[rhs.capacity_];
+    std::copy(rhs.data_, rhs.data_ + capacity_, data_);
+    tail_ = rhs.tail_;
+    head_ = rhs.head_;
   }
 }
 
 QueueArr::~QueueArr() {
-  delete[] data_;
+  Clear();
 }
 
 Complex& QueueArr::Top() {
@@ -43,15 +41,16 @@ const Complex& QueueArr::Top() const {
 
 bool QueueArr::IsEmpty() const noexcept {
   // когда сравнялись он может быть и полный. возможно этот случай в пуше обработан, надо тесты
-  if (head_ == tail_ - 1) return true;
+  if (head_ == tail_) return true;
   return false;
 }
 
 void QueueArr::Push(const Complex &rhs) {
   //need to fix circle moving inside queue
-  if (head_ != tail_ % capacity_){
-    data_[(tail_ - 1) % capacity_] = rhs;
+  data_[tail_] = rhs;
+  if (tail_ - head_ != -1 && tail_ - head_ != capacity_ - 1){
     tail_++;
+    tail_ %= capacity_;
   }
   else
   {
@@ -59,49 +58,38 @@ void QueueArr::Push(const Complex &rhs) {
     for (std::ptrdiff_t i = head_; i < capacity_; i++) {
       ndata[i - head_] = data_[i];
     }
-    for (std::ptrdiff_t i = capacity_ - tail_ % capacity_ + 1; i < tail_; i++) {
-      ndata[i - head_] = data_[i % capacity_];
+    for (std::ptrdiff_t i = 0; i <= tail_; i++) {
+      ndata[i] = data_[i];
     }
     std::swap(ndata, data_);
     delete[] ndata;
+    tail_ = capacity_;
     capacity_ *= 2;
     head_ = 0;
-    data_[tail_ - 1] = rhs;
-    tail_++;
   }
 }
 
 void QueueArr::Pop() noexcept {
-  // проверить
-  if (head_ != (tail_ - 1) % capacity_){
-    head_++;
-    head_ %= capacity_;
-  }
+  head_++;
+  head_ %= capacity_;
 }
 
 QueueArr& QueueArr::operator=(const QueueArr &rhs) {
   if (this != &rhs){
     if (!rhs.IsEmpty()){
-      if (rhs.capacity_ > capacity_) {
-        delete[] data_;
-        data_ = new Complex[rhs.capacity_];
-        for (std::ptrdiff_t i = rhs.head_; i < rhs.tail_; i++) {
-          data_[i - rhs.head_] = rhs.data_[i];
-        }
-        tail_ = rhs.tail_;
-        capacity_ = rhs.capacity_;
-        head_ = 0;
-      }
-      else{
-        for (std::ptrdiff_t i = rhs.head_; i < rhs.tail_; i++) {
-          data_[i - rhs.head_] = rhs.data_[i];
-        }
-        tail_ = rhs.tail_;
-        capacity_ = rhs.capacity_;
-        head_ = 0;
-      }
-    }
+      delete[] data_;
+      data_ = new Complex[rhs.capacity_];
+      capacity_ = rhs.capacity_;
+      std::copy(rhs.data_, rhs.data_ + capacity_, data_);
+      tail_ = rhs.tail_;
+      head_ = rhs.head_;
+    } else
+      Clear();
   }
   return *this;
+}
+
+void QueueArr::Clear() noexcept {
+  delete[] data_;
 }
 
