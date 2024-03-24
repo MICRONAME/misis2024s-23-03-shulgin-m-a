@@ -77,8 +77,7 @@ void QueueLst::Pop() noexcept{
 
 
 void QueueLst::Push(const Complex& rhs) {
-  Node *temp = new Node(Complex(), nullptr);
-  temp->el = rhs;
+  Node *temp = new Node(rhs, nullptr);
   if (!IsEmpty()) {
     tail->pointer = temp;
     tail = temp;
