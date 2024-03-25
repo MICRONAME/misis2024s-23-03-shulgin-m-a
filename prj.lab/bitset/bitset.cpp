@@ -11,7 +11,7 @@ BitSet::BitSet(const BitSet &rhs) {
 }
 BitSet::BitSet(BitSet && rhs) noexcept {
   if (rhs.size_ != 0){
-    //std::swap(data_, rhs.data_);
+    std::swap(data_, rhs.data_);
     std::swap(size_, rhs.size_);
   }
 }
@@ -21,12 +21,12 @@ BitSet::BitSet(BitSet && rhs) noexcept {
 
   }
 }*/
-
+/*
 BitSet &BitSet::operator=(const BitSet &rhs) {
   if (this != &rhs){
 
   }
   return *this;
-}
+}*/
 
 
