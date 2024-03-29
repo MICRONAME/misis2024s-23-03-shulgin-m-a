@@ -1,37 +1,82 @@
-//
-// Created by user on 18.03.2024.
-//
+// 2024 by Polevoi Dmitry under Unlicense
 
-#ifndef MISIS2023F_23_03_SHULGIN_M_A_PRJ_LAB_BITSET_BITSET_HPP_
-#define MISIS2023F_23_03_SHULGIN_M_A_PRJ_LAB_BITSET_BITSET_HPP_
+#pragma once
+#ifndef BITSET_BITSET_HPP_20240318
+#define BITSET_BITSET_HPP_20240318
 
 #include <cstdint>
+#include <iosfwd>
 #include <vector>
 
-class BitSet{
+class BitSet {
  public:
   BitSet() = default;
-  BitSet(const BitSet&);
+
+  BitSet(const BitSet& other) : bits(other.bits), size(other.size) {}
+
+  explicit BitSet(int32_t n) : bits(n / 32 + (n % 32 > 0)), size(n) {}
+
   BitSet(BitSet&&) noexcept ;
-  [[maybe_unused]] explicit BitSet(int32_t&);
+
   BitSet& operator=(const BitSet&);
-  BitSet& operator=(BitSet&&);
+
+  BitSet& operator=(BitSet&&) noexcept ;
+
   ~BitSet();
 
-  int32_t Size() const noexcept;
-  void Resize();
-  void Set(const int32_t idx, const bool val);
-  void Get(const int32_t idx);
-  BitSet& operator&(const BitSet&);
-  BitSet& operator|(const BitSet&);
-  BitSet& operator^(const BitSet&);
-  BitSet& operator~();
-  void Fill(const bool);
+  [[nodiscard]] bool operator==(const BitSet& rhs) const noexcept;
 
+  [[nodiscard]] bool operator!=(const BitSet& rhs) const noexcept {return !operator==(rhs); }
+
+  [[nodiscard]] int32_t Size() const noexcept { return size; }
+
+  void Resize(const int32_t size); // 0 < size
+
+  [[nodiscard]] bool Get(const int32_t idx) const;
+
+  void Set(const int32_t idx, const bool val);
+
+  void Fill(const bool val) noexcept;
+
+  BitSet& operator&=(const BitSet& rhs);
+
+  BitSet& operator|=(const BitSet& rhs);
+
+  BitSet& operator^=(const BitSet& rhs);
+
+  BitSet& operator~();
+
+  void Clear();
+
+  // ? operator[](const int32_t) - what can return
+  // std::ostream& WriteTxt(std::ostream&)
+  // std::ostream& WriteBinary(std::ostream&)
+  // std::istream& ReadTxt(std::istream&)
+  // std::istream& RaadBinary(std::istream&)
  private:
-  int32_t size_{};
-  std::vector<uint32_t> data_;
+  std::int32_t size = 0;
+  std::vector<uint32_t> bits;
 };
 
+// std::ostream& operaror<<(std::ostream&, const BitSet&);
+// std::istream& operaror>>(std::istream&, BitSet&);
 
-#endif //MISIS2023F_23_03_SHULGIN_M_A_PRJ_LAB_BITSET_BITSET_HPP_
+[[nodiscard]] BitSet operator&(const BitSet& lhs, const BitSet& rhs) {
+  BitSet answer(lhs);
+  answer &= rhs;
+  return answer;
+}
+
+[[nodiscard]] BitSet operator|(const BitSet& lhs, const BitSet& rhs) {
+  BitSet answer(lhs);
+  answer |= rhs;
+  return answer;
+}
+
+[[nodiscard]] BitSet operator^(const BitSet& lhs, const BitSet& rhs) {
+  BitSet answer(lhs);
+  answer ^= rhs;
+  return answer;
+}
+
+#endif
