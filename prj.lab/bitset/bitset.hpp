@@ -14,7 +14,7 @@ class BitSet {
 
   BitSet(const BitSet& other) : bits(other.bits), size(other.size) {}
 
-  explicit BitSet(int32_t n) : bits(n / 32 + (n % 32 > 0)), size(n) {}
+  explicit BitSet(int32_t n) : bits(n / 4 + (n % 4 > 0)), size(n) {}
 
   BitSet(BitSet&&) noexcept ;
 
@@ -61,6 +61,7 @@ class BitSet {
 // std::ostream& operaror<<(std::ostream&, const BitSet&);
 // std::istream& operaror>>(std::istream&, BitSet&);
 
+/*
 [[nodiscard]] BitSet operator&(const BitSet& lhs, const BitSet& rhs) {
   BitSet answer(lhs);
   answer &= rhs;
@@ -78,5 +79,5 @@ class BitSet {
   answer ^= rhs;
   return answer;
 }
-
+*/
 #endif

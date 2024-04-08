@@ -33,12 +33,12 @@ void BitSet::Resize(int32_t newSize) {
 void BitSet::Set(const int32_t i, const bool val) {
   if (i >= size)
     throw std::out_of_range("BitSet::Set");
-  bits[i / 32] |= 1 << (i % 32);
+  bits[i / 4] |= 1 << (i % 4);
 }
 bool BitSet::Get(const int32_t i) const{
   if (i >= size)
     return false;
-  return (bits[i / 32] & (1 << (i % 32))) > 0;
+  return (bits[i / 4] & (1 << (i % 4))) > 0;
 }
 
 BitSet &BitSet::operator~() {
