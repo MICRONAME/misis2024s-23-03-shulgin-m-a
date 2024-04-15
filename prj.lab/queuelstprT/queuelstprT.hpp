@@ -5,6 +5,7 @@
 #ifndef MISIS2023F_23_03_SHULGIN_M_A_PRJ_LAB_QUEUELSTPRT_QUEUELSTPRT_HPP_
 #define MISIS2023F_23_03_SHULGIN_M_A_PRJ_LAB_QUEUELSTPRT_QUEUELSTPRT_HPP_
 
+///CLASS
 #include <stdexcept>
 template<class T>
 
@@ -36,24 +37,29 @@ class QueueLstPrT{
   Node *tail_ = nullptr;
 };
 
+///DEFINITIONS
+//Clear
 template<class T>
 void QueueLstPrT<T>::Clear() noexcept {
   while (head_ != nullptr)
     Pop();
 }
 
+//const Top
 template<class T>
 const T &QueueLstPrT<T>::Top() const {
   if (!IsEmpty()) return head_->el;
   throw std::runtime_error("cannot get top value: queue is empty");
 }
 
+//Top
 template<class T>
 T &QueueLstPrT<T>::Top() {
   if (!IsEmpty()) return head_->el;
   throw std::runtime_error("cannot get top value: queue is empty");
 }
 
+//Push
 template<class T>
 void QueueLstPrT<T>::Push(const T &value) {
   auto* temp = new Node(value, nullptr);
@@ -88,6 +94,7 @@ void QueueLstPrT<T>::Push(const T &value) {
   }
 }
 
+//Pop
 template<class T>
 void QueueLstPrT<T>::Pop() noexcept {
   if (!IsEmpty()){
@@ -99,70 +106,49 @@ void QueueLstPrT<T>::Pop() noexcept {
   }
 }
 
+//IsEmpty
 template<class T>
 bool QueueLstPrT<T>::IsEmpty() noexcept {
-  if (head_ != nullptr) return true;
+  if (head_ == nullptr) return true;
   return false;
 }
 
+//operator= &&
 template<class T>
 QueueLstPrT<T> &QueueLstPrT<T>::operator=(QueueLstPrT<T> && other) noexcept{
   std::swap(*this, other);
   return *this;
 }
 
+//operator= &
 template<class T>
 QueueLstPrT<T> &QueueLstPrT<T>::operator=(const QueueLstPrT<T> &rhs) {
-  if (rhs.head != nullptr) {
-    Node* a = head_;
-    if (a == nullptr)
-    {
-      a = new Node(0, nullptr);
-      head_ = a;
-      tail_ = a;
+  if (this != &rhs) {
+    if (rhs.IsEmpty()) {
+      Clear();
+    } else {
+      // TODO: faster and smarter
+      QueueLstPrT<T> copy(rhs);
+      std::swap(head_, copy.head_);
+      std::swap(tail_, copy.tail_);
     }
-    Node* b = rhs.head;
-    while (b != rhs.tail) {
-      if (a == tail_)
-      {
-        a->pointer = new Node(0, nullptr);
-        tail_ = a->pointer;
-      }
-      a->el = b->el;
-      a = a->pointer;
-      b = b->pointer;
-    }
-    a->el = b->el;
-
-    while (a->pointer != nullptr)
-    {
-      Node* tmp = a->pointer;
-      a->pointer = a->pointer->pointer;
-      delete tmp;
-    }
-    tail_ = a;
-  }
-  else {
-    while (head_ != nullptr) {
-      Node* tmp = head_->pointer;
-      delete head_;
-      head_ = tmp;
-    }
-    tail_ = nullptr;
   }
   return *this;
 }
 
+//DESTRUCTOR
 template<class T>
 QueueLstPrT<T>::~QueueLstPrT() {
   Clear();
 }
 
+//swap constructor
 template<class T>
 QueueLstPrT<T>::QueueLstPrT(QueueLstPrT<T> && other) noexcept {
   std::swap(*this, other);
 }
 
+//copy constructor
 template<class T>
 QueueLstPrT<T>::QueueLstPrT(const QueueLstPrT<T> & rhs) {
   if (rhs.head_){

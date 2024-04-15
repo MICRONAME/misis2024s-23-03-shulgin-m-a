@@ -18,44 +18,16 @@ QueueLst::~QueueLst() {
 }
 
 QueueLst& QueueLst::operator=(const QueueLst& rhs) {
-  //надо подумать где неправильно написано
-  if (rhs.head != nullptr) {
-    Node* a = head;
-    if (a == nullptr)
-    {
-      a = new Node(Complex(), nullptr);
-      head = a;
-      tail = a;
+  if (this != &rhs) {
+    if (rhs.IsEmpty()) {
+      Clear();
+    } else {
+      // TODO: faster and smarter
+      QueueLst copy(rhs);
+      std::swap(head, copy.head);
+      std::swap(tail, copy.tail);
     }
-    Node* b = rhs.head;
-    while (b != rhs.tail) {
-      if (a == tail)
-      {
-        a->pointer = new Node(Complex(), nullptr);
-        tail = a->pointer;
-      }
-      a->el = b->el;
-      a = a->pointer;
-      b = b->pointer;
-    }
-    a->el = b->el;
-    while (a->pointer != nullptr)
-    {
-      Node* tmp = a->pointer;
-      a->pointer = a->pointer->pointer;
-      delete tmp;
-    }
-    tail = a;
   }
-  else {
-    while (head != nullptr) {
-      Node* tmp = head->pointer;
-      delete head;
-      head = tmp;
-    }
-    tail = nullptr;
-  }
-  size = rhs.size;
   return *this;
 }
 
@@ -107,4 +79,17 @@ void QueueLst::Clear() noexcept{
   while (head != nullptr){
     Pop();
   }
+}
+
+QueueLst::QueueLst(QueueLst && rhs) noexcept : head(rhs.head), tail(rhs.tail) {
+  rhs.head = nullptr;
+  rhs.tail = nullptr;
+}
+
+QueueLst &QueueLst::operator=(QueueLst && rhs) noexcept {
+  if (this != &rhs){
+    std::swap(head, rhs.head);
+    std::swap(tail, rhs.tail);
+  }
+  return *this;
 }
