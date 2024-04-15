@@ -10,10 +10,12 @@
 
 class StackArr {
  public:
-  StackArr();
+  StackArr() = default;
   StackArr(const StackArr &rhs);
+  StackArr(StackArr &&) noexcept ;
   ~StackArr();
   StackArr &operator=(const StackArr &rhs);
+  StackArr& operator=(StackArr &&) noexcept;
 
   void Push(const Complex &rhs);
 
@@ -30,9 +32,9 @@ class StackArr {
   void Clear() noexcept;
 
  private:
-  std::ptrdiff_t size_;
-  std::ptrdiff_t capacity_;
-  Complex* data_;
+  std::ptrdiff_t size_ = 0;
+  std::ptrdiff_t capacity_ = -1;
+  Complex* data_ = nullptr;
 };
 
 #endif //MISIS2023F_23_03_SHULGIN_M_A_PRJ_LAB_StackArr_StackArr_HPP_

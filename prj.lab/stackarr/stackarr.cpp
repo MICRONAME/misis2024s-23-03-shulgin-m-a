@@ -4,21 +4,13 @@
 #include <stackarr/stackarr.hpp>
 #include <stdexcept>
 
-StackArr::StackArr() {
-  size_ = -1;
-  capacity_ = 10;
-  data_ = new Complex[capacity_];
-}
-StackArr::StackArr(const StackArr &rhs) {
-  if (!rhs.IsEmpty()) {
-    size_ = rhs.size_;
-    if (size_ > capacity_) {
-      capacity_ = 2 * size_;
+StackArr::StackArr(const StackArr &rhs)
+  : size_(rhs.size_) {
+    if (!rhs.IsEmpty()) {
+      capacity_ = ((size_ + 1) / 4 + 1) * 4;
       data_ = new Complex[capacity_];
+      std::copy(rhs.data_, rhs.data_ + size_ + 1, data_);
     }
-    for (std::ptrdiff_t i = 0; i <= size_; ++i)
-      data_[i] = rhs.data_[i];
-  }
 }
 
 StackArr::~StackArr() {
@@ -27,29 +19,33 @@ StackArr::~StackArr() {
 
 StackArr &StackArr::operator=(const StackArr &rhs) {
   if (this != &rhs) {
+    if (rhs.IsEmpty()) {
+      Clear();
+    }
+    if (capacity_ <= rhs.size_) {
+      size_ = (rhs.size_ + 4) / 4 * 4;
+      Complex* buf = new Complex[capacity_];
+      std::swap(data_, buf);
+      delete[] buf;
+    }
     size_ = rhs.size_;
-    if (size_ > capacity_) {
-      capacity_ = 2 * size_;
-      delete[] data_;
-      data_ = new Complex[capacity_];
-    }
-    for (std::ptrdiff_t i = 0; i <= size_; i++) {
-      data_[i] = rhs.data_[i];
-    }
+    std::copy(rhs.data_, rhs.data_ + size_ + 1, data_);
   }
   return *this;
 }
 
 void StackArr::Push(const Complex &rhs) {
-  size_++;
-  if (capacity_ == size_ + 1){
-    capacity_ = 2 * size_;
-    auto* d = new Complex[capacity_ * 2];
-    std::copy(data_, data_ + size_, d);
-    std::swap(data_, d);
-    delete[] d;
+  if (nullptr == data_) {
+    capacity_ = 1;
+    data_ = new Complex[capacity_];
+  } else if (capacity_ == size_ + 1) {
+    auto buf = new Complex[capacity_ * 2];
+    std::copy(data_, data_ + capacity_, buf);
+    std::swap(data_, buf);
+    delete[] buf;
+    capacity_ *= 2;
   }
-  data_[size_] = rhs;
+  data_[++size_] = rhs;
 }
 
 void StackArr::Pop() noexcept{
@@ -72,4 +68,18 @@ void StackArr::Clear() noexcept {
 Complex &StackArr::Top() {
   if (size_ == -1) throw std::runtime_error("cannot get Top value: stack is empty");
   return data_[size_];
+}
+StackArr::StackArr(StackArr && rhs) noexcept {
+  if (!rhs.IsEmpty())
+    std::swap(*this, rhs);
+}
+StackArr &StackArr::operator=(StackArr && rhs) noexcept {
+  if (this != &rhs){
+    if (!rhs.IsEmpty()){
+      std::swap(*this, rhs);
+    }
+    else
+      Clear();
+  }
+  return *this;
 }
