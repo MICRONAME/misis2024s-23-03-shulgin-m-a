@@ -3,6 +3,6 @@
 //
 #include <bitset/bitset.hpp>
 int main(){
-  BitSet a;
-
+  BitSet a(128);
+  a.Fill(1);
 }
