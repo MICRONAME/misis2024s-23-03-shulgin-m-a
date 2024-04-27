@@ -89,3 +89,14 @@ Complex& StackLst::Top() {
     return head->el;
   }
 }
+StackLst::StackLst(StackLst && rhs) noexcept {
+  if (!rhs.IsEmpty()){
+    std::swap(*this, rhs);
+  }
+}
+StackLst &StackLst::operator=(StackLst && rhs) noexcept {
+  if (this != &rhs){
+    std::swap(*this, rhs);
+  }
+  return *this;
+}

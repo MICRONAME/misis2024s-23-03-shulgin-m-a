@@ -23,7 +23,7 @@ StackArr &StackArr::operator=(const StackArr &rhs) {
       Clear();
     }
     if (capacity_ <= rhs.size_) {
-      size_ = (rhs.size_ + 4) / 4 * 4;
+      capacity_ = (rhs.size_ + 4) / 4 * 4;
       Complex* buf = new Complex[capacity_];
       std::swap(data_, buf);
       delete[] buf;

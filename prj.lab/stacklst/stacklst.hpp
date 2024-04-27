@@ -14,11 +14,14 @@ class StackLst{
 
   StackLst(const StackLst&);
 
+  StackLst(StackLst &&) noexcept;
+
   ~StackLst();
 
   [[nodiscard]] StackLst& operator=(const StackLst&);
+  StackLst& operator=(StackLst&&) noexcept;
 
-  bool IsEmpty() const noexcept;
+  [[nodiscard]] bool IsEmpty() const noexcept;
 
   void Pop() noexcept;
 
