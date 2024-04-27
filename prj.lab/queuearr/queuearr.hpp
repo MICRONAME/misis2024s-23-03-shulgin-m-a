@@ -25,14 +25,14 @@ class QueueArr{
   QueueArr& operator=(const QueueArr& rhs);
 
   int Size() const {
-    if (head_ <= tail_)
-      return tail_ - head_;
+    if ((head_ + 1) % capacity_ <= tail_)
+      return tail_ - head_ - 1;
     else
-      return capacity_ - head_ + tail_;
+      return capacity_ - head_ - 1 + tail_;
   }
 
  private:
-  Complex* data_;
+  Complex* data_ = nullptr;
   std::ptrdiff_t head_;
   std::ptrdiff_t tail_;
   std::ptrdiff_t capacity_;

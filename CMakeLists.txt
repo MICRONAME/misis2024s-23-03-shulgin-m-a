@@ -19,3 +19,4 @@ endif()
 
 add_subdirectory(prj.lab)
 add_subdirectory(prj.test)
+add_subdirectory(prj.app)
