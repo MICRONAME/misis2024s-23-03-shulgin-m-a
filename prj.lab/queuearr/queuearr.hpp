@@ -13,6 +13,7 @@ class QueueArr{
  public:
   QueueArr();
   QueueArr(const QueueArr& rhs);
+  QueueArr(QueueArr &&) noexcept ;
   ~QueueArr();
 
   Complex& Top();
@@ -23,6 +24,7 @@ class QueueArr{
   void Clear() noexcept;
 
   QueueArr& operator=(const QueueArr& rhs);
+  QueueArr& operator=(QueueArr &&) noexcept;
 
   int Size() const {
     if ((head_ + 1) % capacity_ <= tail_)
@@ -33,9 +35,9 @@ class QueueArr{
 
  private:
   Complex* data_ = nullptr;
-  std::ptrdiff_t head_;
-  std::ptrdiff_t tail_;
-  std::ptrdiff_t capacity_;
+  std::ptrdiff_t head_ = -1;
+  std::ptrdiff_t tail_ = 0;
+  std::ptrdiff_t capacity_ = 10;
 };
 
 #endif //MISIS2023F_23_03_SHULGIN_M_A_PRJ_LAB_QUEUEARR_QUEUEARR_HPP_

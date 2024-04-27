@@ -5,9 +5,6 @@
 #include <stdexcept>
 
 QueueArr::QueueArr() {
-  head_ = -1;
-  tail_ = 0;
-  capacity_ = 10;
   data_ = new Complex[capacity_];
 }
 
@@ -89,5 +86,16 @@ QueueArr& QueueArr::operator=(const QueueArr &rhs) {
 
 void QueueArr::Clear() noexcept {
   delete[] data_;
+}
+QueueArr &QueueArr::operator=(QueueArr && rhs) noexcept {
+  if (this != &rhs){
+    std::swap(*this, rhs);
+  }
+  return *this;
+}
+QueueArr::QueueArr(QueueArr && rhs) noexcept {
+  if (!rhs.IsEmpty()){
+    std::swap(*this, rhs);
+  }
 }
 
